@@ -5,12 +5,10 @@ services:
   # Redis
   redis:
     image: redis:alpine
-    container_name: redis
 
   # Postgres
   database:
     image: postgres:alpine
-    container_name: database
     env_file:
       - backend/.env
 
@@ -19,7 +17,6 @@ services:
     build:
       context: backend
       dockerfile: Dockerfile.dev
-    container_name: backend
     volumes:
       - ./backend:/src
     ports:
@@ -35,7 +32,6 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile.dev
-    container_name: frontend
     volumes:
       - ./frontend:/src
     ports:
