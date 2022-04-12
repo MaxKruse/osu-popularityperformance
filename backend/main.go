@@ -17,7 +17,8 @@ func main() {
 
 	app.Use(recover.New())
 	app.Use(logger.New(logger.Config{
-		Format: "method={{.Method}} path={{.Path}} status={{.Status}} latency={{.Latency}}",
+		TimeFormat: "2006-01-02 15:04:05",
+		TimeZone:   "UTC",
 	}))
 
 	// api grouping
