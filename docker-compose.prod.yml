@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+  # Postgres
+  database:
+    image: postgres:alpine
+    container_name: database
+    env_file:
+      - backend/.env
+
+  # Backend
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile.prod
+    container_name: backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+      - redis
+    env_file:
+      - backend/.env
+      
+  # Frontend
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.prod
+    container_name: frontend
+    ports:
+      - "80:8480"

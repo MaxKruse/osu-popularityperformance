@@ -5,4 +5,4 @@ semver up alpha &> /dev/null
 alphaCut=$(semver get release | awk -F"-" '{print $1}')
 alphaVersion=${alphaCut:1}
 
-docker build -t "maxkruse/osu-ppp-backend:$alphaVersion" .
+docker build -t "maxkruse/osu-ppp-backend:$alphaVersion" Dockerfile.prod

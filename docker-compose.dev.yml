@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+
+  # Postgres
+  database:
+    image: postgres:alpine
+    container_name: database
+    env_file:
+      - backend/.env
+
+  # Backend
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile.dev
+    container_name: backend
+    volumes:
+      - ./backend:/src
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+      - redis
+    env_file:
+      - backend/.env
+      
+  # Frontend
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    container_name: frontend
+    volumes:
+      - ./frontend:/src
+    ports:
+      - "3000:3000"
