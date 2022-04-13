@@ -1,40 +1,35 @@
 <script setup>
-import { ref } from 'vue'
+// Import needed elements from quasar
+import { QLayout, QHeader, QToolbar, QAvatar, QTabs, QRouteTab, QPageContainer, QFooter, QToolbarTitle } from 'quasar'
 
-defineProps({
-  msg: String
-})
-
-const count = ref(0)
+const TITLE = "Osu! Performance v2.5";
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <q-layout view="hHh Lpr fFf">
 
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-  </p>
+    <q-header elevated class="bg-primary text-white" height-hint="98">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          {{ TITLE }}
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
 
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Documentation
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
 
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <div>{{ TITLE }}</div>
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+
+  </q-layout>
 </template>
-
-<style scoped>
-a {
-  color: #42b983;
-}
-</style>
