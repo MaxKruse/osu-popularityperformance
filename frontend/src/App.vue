@@ -60,8 +60,8 @@ onMounted(async () => {
       <Login />
     </q-page-container>
 
-    <q-page-container v-else>
-      <router-view />
+    <q-page-container v-else class="fit row wrap justify-center items-center content-center">
+      <router-view class="col-auto" style="overflow: auto; min-width: 60%; max-width: 60%;"/>
     </q-page-container>
 
     <q-footer elevated class="bg-grey-8 text-white">
