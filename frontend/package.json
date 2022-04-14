@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.13.5",
+    "axios": "^0.26.1",
+    "pinia": "^2.0.13",
     "quasar": "^2.6.6",
     "vue": "^3.2.25",
     "vue-cookies": "^1.8.0",

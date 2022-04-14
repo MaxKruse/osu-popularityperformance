@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from "vue-router"
-import VueCookies from "vue-cookies"
 
 import { routes } from "./routes";
 
@@ -10,7 +9,7 @@ const router = createRouter({
     history: createWebHistory()
 })
 
-import { Quasar } from 'quasar'
+import { Quasar, Cookies, Notify } from 'quasar'
 import quasarIconSet from 'quasar/icon-set/fontawesome-v6'
 
 // Import icon libraries
@@ -23,12 +22,17 @@ import '@quasar/extras/fontawesome-v6/fontawesome-v6.css'
 // Import Quasar css
 import 'quasar/dist/quasar.css'
 
+// Pinia Store
+import { createPinia } from 'pinia'
 
 createApp(App)
-    .use(router)
-    .use(VueCookies)
-    .use(Quasar, {
-      plugins: {}, // import Quasar plugins and add here
-      iconSet: quasarIconSet,
-    })
-    .mount('#app')
+  .use(router)
+  .use(createPinia())
+  .use(Quasar, {
+    plugins: {
+      Cookies,
+      Notify
+    }, // import Quasar plugins and add here
+    iconSet: quasarIconSet,
+  })
+  .mount('#app')

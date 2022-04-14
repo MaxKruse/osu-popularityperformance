@@ -1,10 +1,10 @@
-import HelloWorld from './components/HelloWorld.vue'
+import Home from './views/Home.vue'
 import Code from './components/Code.vue'
 
 export const routes = [
     {
         path: '/',
-        component: HelloWorld
+        component: Home
     },
     {
         path: '/code',
