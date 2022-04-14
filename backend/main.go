@@ -1,11 +1,13 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/maxkruse/osu-popularityperformance/database"
@@ -27,6 +29,11 @@ func main() {
 		TimeZone:   "UTC",
 	}))
 
+	if _, exists := os.LookupEnv("DEBUG"); exists {
+		log.Println("Debug mode enabled")
+		app.Use(cors.New())
+	}
+
 	// start database connection
 	database.Init()
 
@@ -34,5 +41,5 @@ func main() {
 	app.Get("/api/oauth/start", routes.OAuthStart)
 	app.Get("/api/oauth/callback", routes.OAuthCallback)
 
-	fmt.Errorf("%s", app.Listen(":5000"))
+	log.Fatalf("%s", app.Listen(":5000"))
 }

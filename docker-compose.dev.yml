@@ -22,6 +22,8 @@ services:
       - redis
     env_file:
       - backend/.env
+    environment:
+      - DEBUG="true"
       
   # Frontend
   frontend:
