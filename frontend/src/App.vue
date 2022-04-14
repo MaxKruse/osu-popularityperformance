@@ -4,27 +4,31 @@ import { useStore } from './store';
 import { onMounted, ref, watch } from 'vue';
 import { GetSelf } from "./backend";
 import Login from './views/Login.vue';
+import { useRoute, useRouter } from "vue-router";
 
 const TITLE = "Osu! Performance v2.5";
 
 const q = useQuasar();
 const store = useStore();
 
+const route = useRoute();
+
 // set darkmode
 q.dark.set(true);
 
-watch(store.user, (user) => {
-    console.log("Watcher:", user)
-});
-
-const isLoggedIn = ref(false);
+const isLoggedIn = ref(true);
 
 // try to get self from api
 onMounted(async () => {
+
+  if(route.path === "/code") {
+    return;
+  }
+
   try {
     store.user = await GetSelf();
-    isLoggedIn.value = true;
   } catch (e) {
+    isLoggedIn.value = false;
     console.error(e);
     q.notify({
             type: "negative",

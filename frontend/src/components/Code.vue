@@ -1,20 +1,24 @@
 <script setup>
 import { useQuasar } from 'quasar';
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from 'vue-router';
+
+const q = useQuasar();
 
 const router = useRouter();
 const route = useRoute();
 
+
+// if we have a token, set the cookie now
 let session = route.query?.session || "";
 
-// get the session from the http params
-// save session as cookie
-const $q = useQuasar();
+if (session !== "") {
+    console.log("Session param is there:", session);
+    q.cookies.set('session', session);
+    q.cookies.remove("state");
 
-$q.cookies.set('session', session);
-$q.cookies.remove("state")
-
-// redirect to the main page
-router.push({ path: '/' });
+    router.push({
+        path: "/"
+    });
+}
 
 </script>

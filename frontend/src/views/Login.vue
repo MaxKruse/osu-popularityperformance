@@ -4,6 +4,6 @@ import { QBtn } from "quasar"
 
 <template>
 
-<q-btn label="Login with osu!" href="https://localhost:5000/api/oauth/start" padding="lg" color="pink-4 is-rounded" class="absolute-center" size="xl" @click="redirectToLogin" />
+<q-btn label="Login with osu!" href="http://localhost:5000/api/oauth/start" padding="lg" color="pink-4 is-rounded" class="absolute-center" size="xl" />
 
 </template>
