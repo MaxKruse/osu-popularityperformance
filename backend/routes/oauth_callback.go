@@ -2,8 +2,10 @@ package routes
 
 import (
 	"encoding/json"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/maxkruse/osu-popularityperformance/database"
 	"github.com/maxkruse/osu-popularityperformance/models"
 )
 
@@ -43,12 +45,35 @@ func OAuthCallback(c *fiber.Ctx) error {
 	var userInfo models.BanchoUser
 	json.NewDecoder(userResp.Body).Decode(&userInfo)
 
-	// TODO:
-	// - check if user exists
-	// - add session to user's sessions
-	// - save user to db
+	// make db session
+	databaseSession := database.GetSession().Debug()
+
+	// Search for this user
+	user := models.User{}
+
+	databaseSession.Preload("Sessions").First(&user, "bancho_id = ?", userInfo.UserId)
+
+	// make a new sessionToken
+	sessToken := generateState(16)
+
+	user.BanchoId = userInfo.UserId
+	user.Username = userInfo.Username
+	user.Sessions = append(user.Sessions, models.Session{
+		SessionToken: sessToken,
+	})
+
+	// delete all tokens that were granted to the user. Dont just set the deleted_at, actually delete it
+	databaseSession.Unscoped().Delete(&models.Token{}, "user_id = ?", user.ID)
+
+	user.OAuthTokens = &models.Token{
+		Token: *tok,
+	}
+
+	databaseSession.Save(&user)
+
 	// - redirect to frontend, giving the SessionToken as a HTTP-Param
 
-	// for now, just show what userdata we got from bancho
-	return c.JSON(userInfo)
+	// Get redirect URL for the frontend:
+	frontendUri := os.Getenv("FRONTEND_REDIRECT_URI")
+	return c.Redirect(frontendUri + "?session=" + sessToken)
 }

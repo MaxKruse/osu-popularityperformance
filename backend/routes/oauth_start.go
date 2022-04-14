@@ -12,9 +12,9 @@ var (
 	conf *oauth2.Config
 )
 
-func generateState() string {
+func generateState(length int32) string {
 	alphabet := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-	res := make([]rune, len(alphabet))
+	res := make([]rune, length)
 	for i := range res {
 		res[i] = alphabet[rand.Intn(len(alphabet))]
 	}
@@ -40,7 +40,7 @@ func OAuthStart(c *fiber.Ctx) error {
 	}
 
 	// generate random state for later MITM prevention
-	state := generateState()
+	state := generateState(32)
 
 	// set state for this session
 	c.Cookie(&fiber.Cookie{
