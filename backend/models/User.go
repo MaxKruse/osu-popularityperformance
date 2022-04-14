@@ -17,6 +17,7 @@ type User struct {
 	JsonModel
 	BanchoId    int       `json:"user_id"`
 	Username    string    `json:"username"`
+	AvatarUri   string    `json:"avatar_uri"`
 	Sessions    []Session `json:"-"`
 	OAuthTokens *Token    `json:"-"`
 }

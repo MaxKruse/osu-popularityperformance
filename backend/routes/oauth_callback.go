@@ -58,6 +58,7 @@ func OAuthCallback(c *fiber.Ctx) error {
 
 	user.BanchoId = userInfo.UserId
 	user.Username = userInfo.Username
+	user.AvatarUri = userInfo.AvatarURL
 	user.Sessions = append(user.Sessions, models.Session{
 		SessionToken: sessToken,
 	})

@@ -41,5 +41,7 @@ func main() {
 	app.Get("/api/oauth/start", routes.OAuthStart)
 	app.Get("/api/oauth/callback", routes.OAuthCallback)
 
+	app.Get("/api/self", routes.GetSelf)
+
 	log.Fatalf("%s", app.Listen(":5000"))
 }
